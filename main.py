@@ -2,6 +2,7 @@ import sys
 import os
 import threading
 import time
+import tkinter as tk
 from core.ai_engine import AIEngine
 from core.executor import CommandExecutor
 from core.context_manager import ContextManager
@@ -12,6 +13,10 @@ class DesktopAIAssistant:
     def __init__(self):
         print("Initializing Desktop AI Assistant...")
         
+        # Initialize Tkinter root first
+        self.root = tk.Tk()
+        self.root.withdraw()  # Hide initially
+        
         # Initialize components
         self.context_manager = ContextManager()
         self.ai_engine = AIEngine()
@@ -19,7 +24,8 @@ class DesktopAIAssistant:
         self.chat_interface = ChatInterface(
             self.ai_engine, 
             self.executor, 
-            self.context_manager
+            self.context_manager,
+            self.root  # Pass root to chat interface
         )
         self.hotkey_manager = HotkeyManager(self.show_assistant)
         
@@ -33,15 +39,15 @@ class DesktopAIAssistant:
         print("Press Ctrl+Alt+Space to activate the assistant")
         
     def show_assistant(self):
-        """Show the chat interface"""
-        self.chat_interface.show_interface()
+        """Show the chat interface - thread-safe version"""
+        # Use after() to schedule GUI update in main thread
+        self.root.after(0, self.chat_interface.show_interface)
         
     def run(self):
-        """Run the main application loop"""
+        """Run the main application with Tkinter mainloop"""
         try:
-            # Keep the application running
-            while True:
-                time.sleep(1)
+            # Start Tkinter main loop
+            self.root.mainloop()
         except KeyboardInterrupt:
             print("\nShutting down AI Assistant...")
             self.shutdown()
@@ -51,6 +57,7 @@ class DesktopAIAssistant:
         self.hotkey_manager.stop_hotkeys()
         if self.executor.browser_driver:
             self.executor.browser_driver.quit()
+        self.root.quit()
         sys.exit(0)
 
 if __name__ == "__main__":
@@ -71,3 +78,15 @@ if __name__ == "__main__":
     # Start the assistant
     assistant = DesktopAIAssistant()
     assistant.run()
+
+
+def handle_exception(exc_type, exc_value, exc_traceback):
+    """Global exception handler"""
+    if issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+        return
+    
+    print(f"Uncaught exception: {exc_type.__name__}: {exc_value}")
+
+# Set global exception handler
+sys.excepthook = handle_exception

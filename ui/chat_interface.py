@@ -3,21 +3,31 @@ from tkinter import ttk
 import threading
 
 class ChatInterface:
-    def __init__(self, ai_engine, executor, context_manager):
+    def __init__(self, ai_engine, executor, context_manager, root=None):
         self.ai_engine = ai_engine
         self.executor = executor
         self.context_manager = context_manager
-        self.setup_ui()
+        
+        # Use provided root or create new one
+        if root:
+            self.root = root
+            self.setup_ui()
+        else:
+            self.root = tk.Tk()
+            self.setup_ui()
+            self.root.withdraw()
         
     def setup_ui(self):
-        self.root = tk.Tk()
-        self.root.title("AI Assistant")
-        self.root.geometry("500x120")
-        self.root.attributes('-topmost', True)
-        self.root.configure(bg='#2b2b2b')
+        # Create a toplevel window for the chat interface
+        self.chat_window = tk.Toplevel(self.root)
+        self.chat_window.title("AI Assistant")
+        self.chat_window.geometry("500x120")
+        self.chat_window.attributes('-topmost', True)
+        self.chat_window.configure(bg='#2b2b2b')
+        self.chat_window.protocol("WM_DELETE_WINDOW", self.hide_interface)
         
         # Create main frame
-        main_frame = tk.Frame(self.root, bg='#2b2b2b')
+        main_frame = tk.Frame(self.chat_window, bg='#2b2b2b')
         main_frame.pack(fill='both', expand=True, padx=10, pady=10)
         
         # Status label
@@ -40,7 +50,7 @@ class ChatInterface:
         )
         self.input_field.pack(fill='x', pady=5)
         self.input_field.bind('<Return>', self.process_input)
-        self.input_field.bind('<Escape>', self.hide_interface)
+        self.input_field.bind('<Escape>', lambda e: self.hide_interface())
         
         # Button frame
         button_frame = tk.Frame(main_frame, bg='#2b2b2b')
@@ -71,7 +81,7 @@ class ChatInterface:
         self.cancel_button.pack(side='right')
         
         # Hide initially
-        self.root.withdraw()
+        self.chat_window.withdraw()
         
     def process_input(self, event):
         user_input = self.input_var.get().strip()
@@ -80,7 +90,7 @@ class ChatInterface:
             
         # Update status
         self.status_label.config(text="Processing command...")
-        self.root.update()
+        self.chat_window.update()
         
         # Process in separate thread to avoid blocking UI
         threading.Thread(target=self._execute_command, args=(user_input,), daemon=True).start()
@@ -114,12 +124,14 @@ class ChatInterface:
         self.root.after(2000, self.hide_interface)  # Hide after 2 seconds
         
     def show_interface(self):
-        self.root.deiconify()
-        self.root.lift()
-        self.root.focus_force()
+        """Show the chat interface - now thread-safe"""
+        self.chat_window.deiconify()
+        self.chat_window.lift()
+        self.chat_window.focus_force()
         self.input_field.focus()
         self.status_label.config(text="AI Assistant Ready - Type your command...")
         
-    def hide_interface(self, event=None):
+    def hide_interface(self):
+        """Hide the chat interface"""
         self.input_var.set("")
-        self.root.withdraw()
+        self.chat_window.withdraw()

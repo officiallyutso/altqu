@@ -1,0 +1,105 @@
+{
+  "conversations": [
+    {
+      "timestamp": "2025-07-07T05:05:59.365692",
+      "user_input": "open spotify",
+      "response": "{'type': 'open_application', 'app': 'spotify'}",
+      "context": {
+        "title": "AI Assistant",
+        "app": "AI Assistant",
+        "screen_text": "Processing command\n\nopen spotify\n\nCancel Execute\n"
+      }
+    },
+    {
+      "timestamp": "2025-07-07T05:06:33.237502",
+      "user_input": "write a mail to vinayak for me",
+      "response": "{'type': 'create_document', 'doc_type': 'email', 'recipient': 'vinayak'}",
+      "context": {
+        "title": "AI Assistant",
+        "app": "AI Assistant",
+        "screen_text": "Processing command\n\nite a mail to vinayak for m\n\nCancel Execute\n"
+      }
+    },
+    {
+      "timestamp": "2025-07-07T05:07:08.056827",
+      "user_input": "write a mail to vinayak for me",
+      "response": "{'type': 'web_search', 'query': 'write a mail to vinayak for me'}",
+      "context": {
+        "title": "AI Assistant",
+        "app": "AI Assistant",
+        "screen_text": "Processing command\n\nite a mail to vinayak for m\n\nCancel Execute\n"
+      }
+    },
+    {
+      "timestamp": "2025-07-07T05:07:50.485465",
+      "user_input": "open spotify and play any song",
+      "response": "{'type': 'web_navigate', 'url': 'https://www.spotify.com/search/'}",
+      "context": {
+        "title": "AI Assistant",
+        "app": "AI Assistant",
+        "screen_text": "Processing command\n\nopen spotify and play any song|\n\nCancel Execute\n"
+      }
+    },
+    {
+      "timestamp": "2025-07-07T05:08:13.893769",
+      "user_input": "open spotify",
+      "response": "{'type': 'open_application', 'app': 'spotify'}",
+      "context": {
+        "title": "AI Assistant",
+        "app": "AI Assistant",
+        "screen_text": "Processing command\n\nopen spotify\n\nCancel Execute\n"
+      }
+    },
+    {
+      "timestamp": "2025-07-07T05:08:35.297017",
+      "user_input": "open files",
+      "response": "{'type': 'file_operation', 'command': 'open_files'}",
+      "context": {
+        "title": "AI Assistant",
+        "app": "AI Assistant",
+        "screen_text": "Processing command\n\nCancel Execute\n"
+      }
+    },
+    {
+      "timestamp": "2025-07-07T05:08:52.404796",
+      "user_input": "open discord",
+      "response": "{'type': 'open_application', 'app': 'discord'}",
+      "context": {
+        "title": "AI Assistant",
+        "app": "AI Assistant",
+        "screen_text": "Processing command\n\nopen discord|\n\nCancel Execute\n"
+      }
+    },
+    {
+      "timestamp": "2025-07-07T05:09:09.054506",
+      "user_input": "open chrome",
+      "response": "{'type': 'open_application', 'app': 'chrome'}",
+      "context": {
+        "title": "AI Assistant",
+        "app": "AI Assistant",
+        "screen_text": "Processing command\n\nopen chro!\n\nCancel Execute\n"
+      }
+    },
+    {
+      "timestamp": "2025-07-07T05:10:00.728941",
+      "user_input": "write an email",
+      "response": "{'type': 'create_document', 'doc_type': 'email'}",
+      "context": {
+        "title": "AI Assistant",
+        "app": "AI Assistant",
+        "screen_text": "Processing command\n\nite an email\n\nCancel Execute\n"
+      }
+    },
+    {
+      "timestamp": "2025-07-07T05:10:15.827999",
+      "user_input": "write an email",
+      "response": "{'type': 'create_document', 'doc_type': 'email'}",
+      "context": {
+        "title": "AI Assistant",
+        "app": "AI Assistant",
+        "screen_text": "Processing command\n\nite an email\n\nCancel Execute\n"
+      }
+    }
+  ],
+  "user_preferences": {}
+}

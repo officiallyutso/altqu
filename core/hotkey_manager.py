@@ -19,10 +19,14 @@ class HotkeyManager:
             return False
             
     def activate_assistant(self):
+        """Activate assistant - this runs in background thread"""
         if not self.is_active:
             self.is_active = True
             try:
+                # Call the callback (which should use root.after() for thread safety)
                 self.callback()
+            except Exception as e:
+                print(f"Error activating assistant: {e}")
             finally:
                 # Reset after a short delay
                 threading.Timer(0.5, self._reset_active_state).start()
