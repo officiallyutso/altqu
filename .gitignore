@@ -54,3 +54,8 @@ dist/
 # UI build files (if using PyQt/Tkinter with generated resources)
 *.qrc
 *.ui.py
+
+
+
+
+project_mvp.txt
