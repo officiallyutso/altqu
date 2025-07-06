@@ -1,19 +1,38 @@
-from global_hotkeys import *
+import keyboard
 import threading
+import time
 
 class HotkeyManager:
     def __init__(self, callback):
         self.callback = callback
         self.is_active = False
+        self.hotkey_combination = "ctrl+alt+space"
         
     def setup_hotkeys(self):
-        bindings = [
-            ["ctrl + alt + space", None, self.activate_assistant, False]
-        ]
-        register_hotkeys(bindings)
-        start_checking_hotkeys()
-        
+        """Setup global hotkeys using keyboard library"""
+        try:
+            keyboard.add_hotkey(self.hotkey_combination, self.activate_assistant)
+            print(f"Hotkey {self.hotkey_combination} registered successfully")
+            return True
+        except Exception as e:
+            print(f"Failed to register hotkey: {e}")
+            return False
+            
     def activate_assistant(self):
         if not self.is_active:
             self.is_active = True
-            self.callback()
+            try:
+                self.callback()
+            finally:
+                # Reset after a short delay
+                threading.Timer(0.5, self._reset_active_state).start()
+                
+    def _reset_active_state(self):
+        self.is_active = False
+        
+    def stop_hotkeys(self):
+        """Stop listening for hotkeys"""
+        try:
+            keyboard.unhook_all_hotkeys()
+        except:
+            pass
