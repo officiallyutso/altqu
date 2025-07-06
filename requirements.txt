@@ -1,10 +1,9 @@
-ollama
-pynput
-pyautogui
-psutil
-requests
-beautifulsoup4
-global-hotkeys
-tkinter ; platform_system == "Windows"  # tkinter is usually pre-installed, but this is a fallback for Windows
-selenium
-webdriver-manager
+ollama>=0.1.7
+keyboard>=0.13.5
+pygetwindow>=0.0.9
+pyautogui>=0.9.54
+selenium>=4.15.0
+webdriver-manager>=4.0.1
+pytesseract>=0.3.10
+Pillow>=10.0.0
+requests>=2.31.0
