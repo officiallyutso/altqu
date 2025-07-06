@@ -1,0 +1,10 @@
+ollama
+pynput
+pyautogui
+psutil
+requests
+beautifulsoup4
+global-hotkeys
+tkinter ; platform_system == "Windows"  # tkinter is usually pre-installed, but this is a fallback for Windows
+selenium
+webdriver-manager

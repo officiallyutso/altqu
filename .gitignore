@@ -1,0 +1,56 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environment
+altqu/
+
+# Ollama model cache
+~/.ollama/
+
+# llama.cpp build and model files
+models/
+*.bin
+*.gguf
+*.ggml
+*.pth
+*.ckpt
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+*.swp
+*.DS_Store
+
+# Jupyter and notebook checkpoints
+.ipynb_checkpoints/
+
+# System-specific files
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# IDE settings
+.vscode/
+.idea/
+*.code-workspace
+
+# Configs and secrets
+config.yaml
+.env
+secrets.json
+credentials.json
+token.json
+
+# Compiled C extensions / build outputs
+build/
+dist/
+*.egg-info/
+
+# UI build files (if using PyQt/Tkinter with generated resources)
+*.qrc
+*.ui.py
