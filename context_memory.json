@@ -1,0 +1,155 @@
+{
+  "conversations": [
+    {
+      "timestamp": "2025-07-07T06:20:53.456094",
+      "user_input": "open youtube and play mrbeast",
+      "response": "{'type': 'web_search', 'query': 'open youtube and play mrbeast', 'reasoning': 'Fallback to web search'}",
+      "context": {
+        "text_content": "00od nstd Aeaf Honnalenu ceoal LAAAAepU AeatC afp 3 Ncla Fnpa Hancs> DpocuTtAatd ponueed EateAenin Dhcanarnte Chld Edei coauoenlt Vut Insl Mtc Stt t LUlsuCono Hn Ean B' Ccrient Rot? Pan Ral Petiha VttenttE Pinieen EDaund Aanrcen oen atfet Llt Lnenaant In Fn Mnf Trlatro \"Olnuice TufitAeentn CuITe Non NJiatiar\" StnE ia ttan 9r\"\" Metteteeth ath Hettts Metinfa PAte Fia (rou7t Afnnate Htfin at Otm AAn KNere 4 Miietuntet Futt Mearant cieatachatd Poenletii Raalr Miatt te enngta Hfaln Jeeieat Utf utt inl| 3tama Tnrtttt tTa 31 Uert Orin' Hn Hid Het alean eeaei hedulle 3llcbalt cneend aie Fn Hmemn Ktett Manle 3lmellin Aleen Dlvl euutreluluibei KenauthuukuaunaloatRta Untatutg \"pineiy Enrnn iinaut L eclatu hlned Rec Aramnel Hann DdE D Aaet Clat Hene HnAod Ernat OCA Huflch Deda O Metilo?",
+        "ui_elements": {
+          "buttons": [],
+          "text_fields": [],
+          "images": []
+        },
+        "clickable_areas": [],
+        "current_app": {
+          "title": "AI Assistant",
+          "app_name": "AI Assistant",
+          "bounds": [
+            1051,
+            339,
+            518,
+            167
+          ]
+        },
+        "screen_layout": {
+          "screen_size": [
+            640,
+            360
+          ],
+          "regions": {
+            "top": [
+              0,
+              0,
+              640,
+              90
+            ],
+            "middle": [
+              0,
+              90,
+              640,
+              180
+            ],
+            "bottom": [
+              0,
+              270,
+              640,
+              90
+            ]
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2025-07-07T06:21:07.809232",
+      "user_input": "open youtube",
+      "response": "{'type': 'app_search_open', 'reasoning': 'opening YouTube as requested', 'app_to_search': 'YouTube', 'coordinates': [], 'text_to_type': '', 'confidence': 1}",
+      "context": {
+        "text_content": "00od nstd Aeaf Honnalenu ceoal LAAAAepU AeatC afp 3 Ncla Fnpa Hancs> DpocuTtAatd ponueed EateAenin Dhcanarnte Chld Edei coauoenlt Vut Insl Mtc Stt t LUlsuCono Hn Ean B' Ccrient Rot? Pan Ral Petiha VttenttE Pinieen EDaund Aanrcen oen atfet Llt Lnenaant In Fn Mnf Trlatro \"Olnuice TufitAeentn CuITe Non NJiatiar\" StnE ia ttan 9r\"\" Metteteeth ath Hettts Metinfa PAte Fia (rou7t Afnnate Htfin at Otm AAn KNere 4 Miietuntet Futt Mearant cieatachatd Poenletii Raalr Miatt te enngta Hfaln Jeeieat Utf utt inl| 3tama Tnrtttt tTa 31 Uert Orin' Hn Hid Het alean eeaei hedulle 3llcbalt cneend aie Fn Hmemn Ktett Manle 3lmellin Aleen Dlvl euutreluluibei KenauthuukuaunaloatRta Untatutg \"pineiy Enrnn iinaut L eclatu hlned Rec Aramnel Hann DdE D Aaet Clat Hene HnAod Ernat OCA Huflch Deda O Metilo?",
+        "ui_elements": {
+          "buttons": [],
+          "text_fields": [],
+          "images": []
+        },
+        "clickable_areas": [],
+        "current_app": {
+          "title": "AI Assistant",
+          "app_name": "AI Assistant",
+          "bounds": [
+            1051,
+            339,
+            518,
+            167
+          ]
+        },
+        "screen_layout": {
+          "screen_size": [
+            640,
+            360
+          ],
+          "regions": {
+            "top": [
+              0,
+              0,
+              640,
+              90
+            ],
+            "middle": [
+              0,
+              90,
+              640,
+              180
+            ],
+            "bottom": [
+              0,
+              270,
+              640,
+              90
+            ]
+          }
+        }
+      }
+    },
+    {
+      "timestamp": "2025-07-07T06:21:22.387458",
+      "user_input": "open youtube on edge",
+      "response": "{'type': 'app_search_open', 'reasoning': 'Opening YouTube on Microsoft Edge as per user request', 'app_to_search': 'Microsoft Edge', 'coordinates': [0, 0], 'text_to_type': '', 'confidence': 1.0}",
+      "context": {
+        "text_content": "00od nstd Aeaf Honnalenu ceoal LAAAAepU AeatC afp 3 Ncla Fnpa Hancs> DpocuTtAatd ponueed EateAenin Dhcanarnte Chld Edei coauoenlt Vut Insl Mtc Stt t LUlsuCono Hn Ean B' Ccrient Rot? Pan Ral Petiha VttenttE Pinieen EDaund Aanrcen oen atfet Llt Lnenaant In Fn Mnf Trlatro \"Olnuice TufitAeentn CuITe Non NJiatiar\" StnE ia ttan 9r\"\" Metteteeth ath Hettts Metinfa PAte Fia (rou7t Afnnate Htfin at Otm AAn KNere 4 Miietuntet Futt Mearant cieatachatd Poenletii Raalr Miatt te enngta Hfaln Jeeieat Utf utt inl| 3tama Tnrtttt tTa 31 Uert Orin' Hn Hid Het alean eeaei hedulle 3llcbalt cneend aie Fn Hmemn Ktett Manle 3lmellin Aleen Dlvl euutreluluibei KenauthuukuaunaloatRta Untatutg \"pineiy Enrnn iinaut L eclatu hlned Rec Aramnel Hann DdE D Aaet Clat Hene HnAod Ernat OCA Huflch Deda O Metilo?",
+        "ui_elements": {
+          "buttons": [],
+          "text_fields": [],
+          "images": []
+        },
+        "clickable_areas": [],
+        "current_app": {
+          "title": "AI Assistant",
+          "app_name": "AI Assistant",
+          "bounds": [
+            1051,
+            339,
+            518,
+            167
+          ]
+        },
+        "screen_layout": {
+          "screen_size": [
+            640,
+            360
+          ],
+          "regions": {
+            "top": [
+              0,
+              0,
+              640,
+              90
+            ],
+            "middle": [
+              0,
+              90,
+              640,
+              180
+            ],
+            "bottom": [
+              0,
+              270,
+              640,
+              90
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "user_preferences": {}
+}
