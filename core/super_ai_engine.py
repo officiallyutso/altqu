@@ -10,68 +10,84 @@ class SuperAIEngine:
         self.conversation_history = []
         self.screen_intelligence = None
         
+    def find_best_text_field(self, screen_analysis):
+        """Find the best text field to interact with"""
+        text_fields = screen_analysis.get('ui_elements', {}).get('text_fields', [])
+        
+        if text_fields:
+            # Return the first text field found
+            return text_fields[0]['position']
+        
+        return None
+
+    def calculate_relevance_score(self, target_description, screen_text, position):
+        """Calculate relevance score for click target"""
+        # Simple scoring based on text proximity
+        target_words = target_description.lower().split()
+        screen_words = screen_text.lower().split()
+        
+        score = 0
+        for word in target_words:
+            if word in screen_words:
+                score += 1
+        
+        return score
+
+    def extract_app_name_from_command(self, user_input):
+        """Extract app name from user command"""
+        user_lower = user_input.lower()
+        
+        # Common app names
+        app_names = {
+            'calculator': 'calculator',
+            'calc': 'calculator',
+            'notepad': 'notepad',
+            'chrome': 'chrome',
+            'firefox': 'firefox',
+            'vscode': 'code',
+            'vs code': 'code',
+            'word': 'word',
+            'excel': 'excel',
+            'outlook': 'outlook'
+        }
+        
+        for app_key, app_name in app_names.items():
+            if app_key in user_lower:
+                return app_name
+        
+        # Extract from "open [app_name]" pattern
+        import re
+        match = re.search(r'open\s+(\w+)', user_lower)
+        if match:
+            return match.group(1)
+        
+        return 'unknown'
+        
     def set_screen_intelligence(self, screen_intelligence):
         self.screen_intelligence = screen_intelligence
         
     def process_intelligent_command(self, user_input, screen_analysis):
-        """Process command with full screen understanding"""
+        """Process command with better JSON handling"""
         
-        # Create comprehensive context
         context = self.build_intelligent_context(screen_analysis)
         
-        system_prompt = f"""You are an extremely intelligent desktop AI assistant with full screen awareness and control capabilities.
+        system_prompt = f"""You are a desktop AI assistant. Return ONLY valid JSON with this exact structure:
 
-CURRENT SCREEN CONTEXT:
-- Application: {context['current_app']}
-- Visible Text: {context['screen_text'][:1000]}
-- UI Elements: {len(context['ui_elements']['buttons'])} buttons, {len(context['ui_elements']['text_fields'])} text fields
-- Clickable Areas: {len(context['clickable_areas'])} detected
+    {{
+        "type": "command_type",
+        "reasoning": "brief explanation",
+        "app_to_search": "app_name_if_opening_app",
+        "coordinates": [100, 200],
+        "text_to_type": "text_if_typing",
+        "confidence": 0.9
+    }}
 
-CAPABILITIES:
-1. SCREEN INTERACTION: Click any element, type text, scroll, drag
-2. APPLICATION CONTROL: Open apps by searching Windows, control any app
-3. WEB AUTOMATION: Navigate websites, fill forms, extract information
-4. INTELLIGENT ANALYSIS: Understand content, make recommendations
-5. MULTI-STEP TASKS: Plan and execute complex workflows
+    Valid command types: app_search_open, screen_click, screen_type, web_search
 
-COMMAND TYPES:
-- screen_click: Click specific coordinates or elements
-- screen_type: Type text at current cursor or specific field
-- app_search_open: Search and open applications like Windows search
-- web_intelligent: Intelligent web browsing and interaction
-- analyze_and_recommend: Analyze screen content and provide recommendations
-- multi_step_task: Execute complex multi-step operations
+    User wants: {user_input}
+    Current app: {context.get('current_app', {}).get('app_name', 'Unknown')}
 
-For Spotify example: "play the best song out of these"
-- Analyze visible songs on screen
-- Determine which is "best" based on popularity, ratings, or user preferences
-- Click on that song
-
-For Amazon example: "find the best product"
-- Analyze visible products
-- Compare prices, ratings, reviews
-- Recommend the best option
-- Can navigate to product pages
-
-For app opening: "open calculator"
-- Use Windows search (Win key + type)
-- Don't just run commands, actually simulate user behavior
-
-Return JSON with this structure:
-{{
-    "type": "command_type",
-    "reasoning": "why this action makes sense",
-    "target_element": "description of what to interact with",
-    "coordinates": [x, y],
-    "text_to_type": "text if typing",
-    "app_to_search": "app name if searching",
-    "analysis": "screen analysis results",
-    "multi_steps": ["step1", "step2", "step3"],
-    "confidence": 0.95
-}}
-
-User Command: {user_input}
-"""
+    Return only the JSON object, no other text."""
 
         try:
             response = self.client.chat(
@@ -82,19 +98,60 @@ User Command: {user_input}
                 ]
             )
             
-            response_text = response['message']['content']
+            response_text = response['message']['content'].strip()
             
-            # Extract JSON from response
-            json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
-            if json_match:
-                parsed_response = json.loads(json_match.group())
-                return self.enhance_response_with_intelligence(parsed_response, screen_analysis)
-            else:
-                return self.intelligent_fallback(user_input, screen_analysis)
+            # Clean the response to ensure valid JSON
+            response_text = self.clean_json_response(response_text)
+            
+            # Parse JSON with better error handling
+            try:
+                parsed_response = json.loads(response_text)
+                return parsed_response
+            except json.JSONDecodeError as e:
+                print(f"JSON parsing failed: {e}")
+                return self.create_fallback_response(user_input)
                 
         except Exception as e:
             print(f"AI Engine error: {e}")
-            return self.intelligent_fallback(user_input, screen_analysis)
+            return self.create_fallback_response(user_input)
+
+    def clean_json_response(self, response_text):
+        """Clean AI response to ensure valid JSON"""
+        # Remove any text before the first {
+        start_idx = response_text.find('{')
+        if start_idx != -1:
+            response_text = response_text[start_idx:]
+        
+        # Remove any text after the last }
+        end_idx = response_text.rfind('}')
+        if end_idx != -1:
+            response_text = response_text[:end_idx + 1]
+        
+        # Fix common JSON issues
+        response_text = response_text.replace("'", '"')  # Replace single quotes
+        response_text = re.sub(r',\s*}', '}', response_text)  # Remove trailing commas
+        response_text = re.sub(r',\s*]', ']', response_text)  # Remove trailing commas in arrays
+        
+        return response_text
+
+    def create_fallback_response(self, user_input):
+        """Create a safe fallback response"""
+        user_lower = user_input.lower()
+        
+        if any(app in user_lower for app in ['spotify', 'chrome', 'calculator', 'notepad']):
+            app_name = next((app for app in ['spotify', 'chrome', 'calculator', 'notepad'] if app in user_lower), 'unknown')
+            return {
+                'type': 'app_search_open',
+                'app_to_search': app_name,
+                'reasoning': f'User wants to open {app_name}'
+            }
+        
+        return {
+            'type': 'web_search',
+            'query': user_input,
+            'reasoning': 'Fallback to web search'
+        }
+
     
     def build_intelligent_context(self, screen_analysis):
         """Build comprehensive context from screen analysis"""

@@ -30,20 +30,44 @@ class ContextManager:
             print(f"Error saving context: {e}")
             
     def save_interaction(self, user_input, assistant_response, context_info):
+        # Clean context_info to remove non-serializable objects
+        cleaned_context = self.clean_context_for_json(context_info)
+        
         interaction = {
             'timestamp': datetime.now().isoformat(),
             'user_input': user_input,
             'response': assistant_response,
-            'context': context_info
+            'context': cleaned_context
         }
+        
         self.context['conversations'].append(interaction)
         
         # Keep only last 50 interactions
         if len(self.context['conversations']) > 50:
             self.context['conversations'] = self.context['conversations'][-50:]
-            
+        
         self.save_context()
         
+    def clean_context_for_json(self, context_info):
+        """Remove non-JSON serializable objects from context"""
+        if not isinstance(context_info, dict):
+            return {}
+        
+        cleaned = {}
+        for key, value in context_info.items():
+            if key == 'screenshot':
+                # Don't save screenshots - they're not JSON serializable
+                continue
+            elif isinstance(value, (str, int, float, bool, list, dict)):
+                cleaned[key] = value
+            elif hasattr(value, '__dict__'):
+                # Convert objects to string representation
+                cleaned[key] = str(value)
+            else:
+                cleaned[key] = str(value)
+        
+        return cleaned
+    
     def get_recent_context(self, limit=5):
         return self.context['conversations'][-limit:]
         

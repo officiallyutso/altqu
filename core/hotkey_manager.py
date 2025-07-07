@@ -6,7 +6,7 @@ class HotkeyManager:
     def __init__(self, callback):
         self.callback = callback
         self.is_active = False
-        self.hotkey_combination = "ctrl+alt+space"
+        self.hotkey_combination = "alt+q"
         
     def setup_hotkeys(self):
         """Setup global hotkeys using keyboard library"""

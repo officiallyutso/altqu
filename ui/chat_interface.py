@@ -3,10 +3,12 @@ from tkinter import ttk
 import threading
 
 class ChatInterface:
-    def __init__(self, ai_engine, executor, context_manager, root=None):
+    def __init__(self, ai_engine, executor, context_manager, root=None, screen_intelligence=None):
         self.ai_engine = ai_engine
         self.executor = executor
         self.context_manager = context_manager
+        self.screen_intelligence = screen_intelligence
+        self.current_screen_analysis = None
         
         # Use provided root or create new one
         if root:
@@ -25,6 +27,7 @@ class ChatInterface:
         self.chat_window.attributes('-topmost', True)
         self.chat_window.configure(bg='#2b2b2b')
         self.chat_window.protocol("WM_DELETE_WINDOW", self.hide_interface)
+        
         
         # Create main frame
         main_frame = tk.Frame(self.chat_window, bg='#2b2b2b')
@@ -51,6 +54,9 @@ class ChatInterface:
         self.input_field.pack(fill='x', pady=5)
         self.input_field.bind('<Return>', self.process_input)
         self.input_field.bind('<Escape>', lambda e: self.hide_interface())
+        self.input_field.bind('<Control-w>', lambda e: self.hide_interface())  # Ctrl+W to close
+        self.input_field.bind('<Control-Return>', lambda e: self.process_input(e))  # Ctrl+Enter to execute
+        
         
         # Button frame
         button_frame = tk.Frame(main_frame, bg='#2b2b2b')
@@ -95,41 +101,63 @@ class ChatInterface:
         # Process in separate thread to avoid blocking UI
         threading.Thread(target=self._execute_command, args=(user_input,), daemon=True).start()
         
+        
+    
+    def set_current_screen_analysis(self, screen_analysis):
+        """Set the current screen analysis with progressive updates"""
+        self.current_screen_analysis = screen_analysis
+        
+        if screen_analysis:
+            app_name = screen_analysis.get('current_app', {}).get('app_name', 'Unknown')
+            text_length = len(screen_analysis.get('text_content', ''))
+            ui_elements = len(screen_analysis.get('clickable_areas', []))
+            
+            status_text = f"✓ Screen analyzed: {app_name} | {text_length} chars | {ui_elements} elements"
+        else:
+            status_text = "⚠ Screen analysis in progress..."
+        
+        if hasattr(self, 'status_label'):
+            self.status_label.config(text=status_text)
+        
+    
     def _execute_command(self, user_input):
         try:
-            # Get current context
-            context = self.context_manager.get_current_screen_context()
+            # Use intelligent processing
+            parsed_command = self.ai_engine.process_intelligent_command(
+                user_input, 
+                self.current_screen_analysis
+            )
             
-            # Process with AI engine
-            parsed_command = self.ai_engine.process_command(user_input, context)
-            
-            # Execute command
-            self.executor.execute_command(parsed_command)
+            # Execute with intelligence
+            self.executor.execute_intelligent_command(
+                parsed_command, 
+                self.current_screen_analysis
+            )
             
             # Save interaction
             self.context_manager.save_interaction(
-                user_input, 
-                str(parsed_command), 
-                context
+                user_input,
+                str(parsed_command),
+                self.current_screen_analysis
             )
             
-            # Update UI in main thread
-            self.root.after(0, self._command_completed, "Command executed successfully!")
+            self.root.after(0, self._command_completed, "Intelligent command executed!")
             
         except Exception as e:
             self.root.after(0, self._command_completed, f"Error: {str(e)}")
             
     def _command_completed(self, message):
         self.status_label.config(text=message)
-        self.root.after(2000, self.hide_interface)  # Hide after 2 seconds
+        # self.root.after(2000, self.hide_interface)  # Hide after 2 seconds
         
     def show_interface(self):
-        """Show the chat interface - now thread-safe"""
+        """Show the chat interface immediately"""
         self.chat_window.deiconify()
         self.chat_window.lift()
         self.chat_window.focus_force()
         self.input_field.focus()
-        self.status_label.config(text="AI Assistant Ready - Type your command...")
+        # Show immediate status while analysis runs in background
+        self.status_label.config(text="🔍 Analyzing screen... Ready for commands!")
         
     def hide_interface(self):
         """Hide the chat interface"""

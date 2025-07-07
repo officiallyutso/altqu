@@ -1,103 +1,153 @@
 {
   "conversations": [
     {
-      "timestamp": "2025-07-07T05:05:59.365692",
-      "user_input": "open spotify",
-      "response": "{'type': 'open_application', 'app': 'spotify'}",
+      "timestamp": "2025-07-07T06:20:53.456094",
+      "user_input": "open youtube and play mrbeast",
+      "response": "{'type': 'web_search', 'query': 'open youtube and play mrbeast', 'reasoning': 'Fallback to web search'}",
       "context": {
-        "title": "AI Assistant",
-        "app": "AI Assistant",
-        "screen_text": "Processing command\n\nopen spotify\n\nCancel Execute\n"
+        "text_content": "00od nstd Aeaf Honnalenu ceoal LAAAAepU AeatC afp 3 Ncla Fnpa Hancs> DpocuTtAatd ponueed EateAenin Dhcanarnte Chld Edei coauoenlt Vut Insl Mtc Stt t LUlsuCono Hn Ean B' Ccrient Rot? Pan Ral Petiha VttenttE Pinieen EDaund Aanrcen oen atfet Llt Lnenaant In Fn Mnf Trlatro \"Olnuice TufitAeentn CuITe Non NJiatiar\" StnE ia ttan 9r\"\" Metteteeth ath Hettts Metinfa PAte Fia (rou7t Afnnate Htfin at Otm AAn KNere 4 Miietuntet Futt Mearant cieatachatd Poenletii Raalr Miatt te enngta Hfaln Jeeieat Utf utt inl| 3tama Tnrtttt tTa 31 Uert Orin' Hn Hid Het alean eeaei hedulle 3llcbalt cneend aie Fn Hmemn Ktett Manle 3lmellin Aleen Dlvl euutreluluibei KenauthuukuaunaloatRta Untatutg \"pineiy Enrnn iinaut L eclatu hlned Rec Aramnel Hann DdE D Aaet Clat Hene HnAod Ernat OCA Huflch Deda O Metilo?",
+        "ui_elements": {
+          "buttons": [],
+          "text_fields": [],
+          "images": []
+        },
+        "clickable_areas": [],
+        "current_app": {
+          "title": "AI Assistant",
+          "app_name": "AI Assistant",
+          "bounds": [
+            1051,
+            339,
+            518,
+            167
+          ]
+        },
+        "screen_layout": {
+          "screen_size": [
+            640,
+            360
+          ],
+          "regions": {
+            "top": [
+              0,
+              0,
+              640,
+              90
+            ],
+            "middle": [
+              0,
+              90,
+              640,
+              180
+            ],
+            "bottom": [
+              0,
+              270,
+              640,
+              90
+            ]
+          }
+        }
       }
     },
     {
-      "timestamp": "2025-07-07T05:06:33.237502",
-      "user_input": "write a mail to vinayak for me",
-      "response": "{'type': 'create_document', 'doc_type': 'email', 'recipient': 'vinayak'}",
+      "timestamp": "2025-07-07T06:21:07.809232",
+      "user_input": "open youtube",
+      "response": "{'type': 'app_search_open', 'reasoning': 'opening YouTube as requested', 'app_to_search': 'YouTube', 'coordinates': [], 'text_to_type': '', 'confidence': 1}",
       "context": {
-        "title": "AI Assistant",
-        "app": "AI Assistant",
-        "screen_text": "Processing command\n\nite a mail to vinayak for m\n\nCancel Execute\n"
+        "text_content": "00od nstd Aeaf Honnalenu ceoal LAAAAepU AeatC afp 3 Ncla Fnpa Hancs> DpocuTtAatd ponueed EateAenin Dhcanarnte Chld Edei coauoenlt Vut Insl Mtc Stt t LUlsuCono Hn Ean B' Ccrient Rot? Pan Ral Petiha VttenttE Pinieen EDaund Aanrcen oen atfet Llt Lnenaant In Fn Mnf Trlatro \"Olnuice TufitAeentn CuITe Non NJiatiar\" StnE ia ttan 9r\"\" Metteteeth ath Hettts Metinfa PAte Fia (rou7t Afnnate Htfin at Otm AAn KNere 4 Miietuntet Futt Mearant cieatachatd Poenletii Raalr Miatt te enngta Hfaln Jeeieat Utf utt inl| 3tama Tnrtttt tTa 31 Uert Orin' Hn Hid Het alean eeaei hedulle 3llcbalt cneend aie Fn Hmemn Ktett Manle 3lmellin Aleen Dlvl euutreluluibei KenauthuukuaunaloatRta Untatutg \"pineiy Enrnn iinaut L eclatu hlned Rec Aramnel Hann DdE D Aaet Clat Hene HnAod Ernat OCA Huflch Deda O Metilo?",
+        "ui_elements": {
+          "buttons": [],
+          "text_fields": [],
+          "images": []
+        },
+        "clickable_areas": [],
+        "current_app": {
+          "title": "AI Assistant",
+          "app_name": "AI Assistant",
+          "bounds": [
+            1051,
+            339,
+            518,
+            167
+          ]
+        },
+        "screen_layout": {
+          "screen_size": [
+            640,
+            360
+          ],
+          "regions": {
+            "top": [
+              0,
+              0,
+              640,
+              90
+            ],
+            "middle": [
+              0,
+              90,
+              640,
+              180
+            ],
+            "bottom": [
+              0,
+              270,
+              640,
+              90
+            ]
+          }
+        }
       }
     },
     {
-      "timestamp": "2025-07-07T05:07:08.056827",
-      "user_input": "write a mail to vinayak for me",
-      "response": "{'type': 'web_search', 'query': 'write a mail to vinayak for me'}",
+      "timestamp": "2025-07-07T06:21:22.387458",
+      "user_input": "open youtube on edge",
+      "response": "{'type': 'app_search_open', 'reasoning': 'Opening YouTube on Microsoft Edge as per user request', 'app_to_search': 'Microsoft Edge', 'coordinates': [0, 0], 'text_to_type': '', 'confidence': 1.0}",
       "context": {
-        "title": "AI Assistant",
-        "app": "AI Assistant",
-        "screen_text": "Processing command\n\nite a mail to vinayak for m\n\nCancel Execute\n"
-      }
-    },
-    {
-      "timestamp": "2025-07-07T05:07:50.485465",
-      "user_input": "open spotify and play any song",
-      "response": "{'type': 'web_navigate', 'url': 'https://www.spotify.com/search/'}",
-      "context": {
-        "title": "AI Assistant",
-        "app": "AI Assistant",
-        "screen_text": "Processing command\n\nopen spotify and play any song|\n\nCancel Execute\n"
-      }
-    },
-    {
-      "timestamp": "2025-07-07T05:08:13.893769",
-      "user_input": "open spotify",
-      "response": "{'type': 'open_application', 'app': 'spotify'}",
-      "context": {
-        "title": "AI Assistant",
-        "app": "AI Assistant",
-        "screen_text": "Processing command\n\nopen spotify\n\nCancel Execute\n"
-      }
-    },
-    {
-      "timestamp": "2025-07-07T05:08:35.297017",
-      "user_input": "open files",
-      "response": "{'type': 'file_operation', 'command': 'open_files'}",
-      "context": {
-        "title": "AI Assistant",
-        "app": "AI Assistant",
-        "screen_text": "Processing command\n\nCancel Execute\n"
-      }
-    },
-    {
-      "timestamp": "2025-07-07T05:08:52.404796",
-      "user_input": "open discord",
-      "response": "{'type': 'open_application', 'app': 'discord'}",
-      "context": {
-        "title": "AI Assistant",
-        "app": "AI Assistant",
-        "screen_text": "Processing command\n\nopen discord|\n\nCancel Execute\n"
-      }
-    },
-    {
-      "timestamp": "2025-07-07T05:09:09.054506",
-      "user_input": "open chrome",
-      "response": "{'type': 'open_application', 'app': 'chrome'}",
-      "context": {
-        "title": "AI Assistant",
-        "app": "AI Assistant",
-        "screen_text": "Processing command\n\nopen chro!\n\nCancel Execute\n"
-      }
-    },
-    {
-      "timestamp": "2025-07-07T05:10:00.728941",
-      "user_input": "write an email",
-      "response": "{'type': 'create_document', 'doc_type': 'email'}",
-      "context": {
-        "title": "AI Assistant",
-        "app": "AI Assistant",
-        "screen_text": "Processing command\n\nite an email\n\nCancel Execute\n"
-      }
-    },
-    {
-      "timestamp": "2025-07-07T05:10:15.827999",
-      "user_input": "write an email",
-      "response": "{'type': 'create_document', 'doc_type': 'email'}",
-      "context": {
-        "title": "AI Assistant",
-        "app": "AI Assistant",
-        "screen_text": "Processing command\n\nite an email\n\nCancel Execute\n"
+        "text_content": "00od nstd Aeaf Honnalenu ceoal LAAAAepU AeatC afp 3 Ncla Fnpa Hancs> DpocuTtAatd ponueed EateAenin Dhcanarnte Chld Edei coauoenlt Vut Insl Mtc Stt t LUlsuCono Hn Ean B' Ccrient Rot? Pan Ral Petiha VttenttE Pinieen EDaund Aanrcen oen atfet Llt Lnenaant In Fn Mnf Trlatro \"Olnuice TufitAeentn CuITe Non NJiatiar\" StnE ia ttan 9r\"\" Metteteeth ath Hettts Metinfa PAte Fia (rou7t Afnnate Htfin at Otm AAn KNere 4 Miietuntet Futt Mearant cieatachatd Poenletii Raalr Miatt te enngta Hfaln Jeeieat Utf utt inl| 3tama Tnrtttt tTa 31 Uert Orin' Hn Hid Het alean eeaei hedulle 3llcbalt cneend aie Fn Hmemn Ktett Manle 3lmellin Aleen Dlvl euutreluluibei KenauthuukuaunaloatRta Untatutg \"pineiy Enrnn iinaut L eclatu hlned Rec Aramnel Hann DdE D Aaet Clat Hene HnAod Ernat OCA Huflch Deda O Metilo?",
+        "ui_elements": {
+          "buttons": [],
+          "text_fields": [],
+          "images": []
+        },
+        "clickable_areas": [],
+        "current_app": {
+          "title": "AI Assistant",
+          "app_name": "AI Assistant",
+          "bounds": [
+            1051,
+            339,
+            518,
+            167
+          ]
+        },
+        "screen_layout": {
+          "screen_size": [
+            640,
+            360
+          ],
+          "regions": {
+            "top": [
+              0,
+              0,
+              640,
+              90
+            ],
+            "middle": [
+              0,
+              90,
+              640,
+              180
+            ],
+            "bottom": [
+              0,
+              270,
+              640,
+              90
+            ]
+          }
+        }
       }
     }
   ],

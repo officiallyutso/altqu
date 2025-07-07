@@ -1,4 +1,3 @@
-# core/intelligent_executor.py
 import pyautogui
 import time
 import subprocess
@@ -11,13 +10,91 @@ import numpy as np
 
 class IntelligentExecutor:
     def __init__(self):
+        # Configure pyautogui settings
+        pyautogui.FAILSAFE = True  # Keep failsafe enabled for safety
+        pyautogui.PAUSE = 0.1  # Reduce pause time for better performance
+        
         self.browser_driver = None
         self.setup_browser()
         
-        # Configure pyautogui for safety
-        pyautogui.FAILSAFE = True
-        pyautogui.PAUSE = 0.5
+    def extract_product_info(self, screen_text):
+        """Extract product information from screen text"""
+        # Simple product extraction - look for price patterns
+        import re
         
+        price_patterns = re.findall(r'\$[\d,]+\.?\d*', screen_text)
+        
+        products = []
+        for i, price in enumerate(price_patterns):
+            products.append({
+                'id': i,
+                'price': price,
+                'text_context': screen_text[max(0, screen_text.find(price)-50):screen_text.find(price)+50]
+            })
+        
+        return products
+
+    def find_best_product(self, products):
+        """Find the best product based on simple heuristics"""
+        if not products:
+            return None
+        
+        # Simple heuristic: look for highest rated or best value
+        best_product = products[0]
+        
+        for product in products:
+            # Look for rating indicators in context
+            context = product.get('text_context', '').lower()
+            if 'star' in context or 'rating' in context or 'review' in context:
+                best_product = product
+                break
+        
+        return best_product
+
+    def general_screen_analysis(self, screen_text):
+        """General screen analysis for unknown contexts"""
+        print(f"Analyzing screen content: {len(screen_text)} characters detected")
+        
+        # Look for common UI elements
+        if 'button' in screen_text.lower():
+            print("Buttons detected on screen")
+        if 'search' in screen_text.lower():
+            print("Search functionality detected")
+        if 'menu' in screen_text.lower():
+            print("Menu elements detected")
+
+    def parse_step_to_command(self, step, screen_analysis):
+        """Parse a step into a command structure"""
+        step_lower = step.lower()
+        
+        if 'click' in step_lower:
+            return {
+                'type': 'screen_click',
+                'target_element': step,
+                'reasoning': f'Executing step: {step}'
+            }
+        elif 'type' in step_lower:
+            return {
+                'type': 'screen_type',
+                'text_to_type': step.replace('type', '').strip(),
+                'reasoning': f'Executing step: {step}'
+            }
+        else:
+            return {
+                'type': 'web_search',
+                'query': step,
+                'reasoning': f'Executing step: {step}'
+            }
+
+    def intelligent_web_interaction(self, command_data):
+        """Intelligent web interaction"""
+        url = command_data.get('url', '')
+        if url:
+            webbrowser.open(url)
+        else:
+            print("No URL provided for web interaction")
+    
+    
     def setup_browser(self):
         """Setup browser with intelligent options"""
         try:
@@ -33,7 +110,7 @@ class IntelligentExecutor:
             print(f"Browser setup failed: {e}")
     
     def execute_intelligent_command(self, command_data, screen_analysis):
-        """Execute commands with full intelligence"""
+        """Execute commands with proper error handling"""
         command_type = command_data.get('type')
         
         try:
@@ -53,22 +130,28 @@ class IntelligentExecutor:
                 # Fallback to basic execution
                 self.basic_execution_fallback(command_data)
                 
+        except pyautogui.FailSafeException:
+            print("PyAutoGUI fail-safe triggered. Command execution stopped for safety.")
+            print("Move mouse away from screen corners to continue using the assistant.")
         except Exception as e:
             print(f"Intelligent execution error: {e}")
-    
+
     def intelligent_click(self, command_data, screen_analysis):
-        """Click with intelligence - find and click the right element"""
+        """Click with proper fail-safe handling"""
         coordinates = command_data.get('coordinates')
         target_element = command_data.get('target_element', '')
         
         if coordinates:
-            x, y = coordinates
-            print(f"Clicking at ({x}, {y}) - {target_element}")
-            
-            # Move mouse smoothly (more human-like)
-            pyautogui.moveTo(x, y, duration=0.3)
-            time.sleep(0.1)
-            pyautogui.click()
+            try:
+                x, y = coordinates
+                print(f"Clicking at ({x}, {y}) - {target_element}")
+                
+                # Move mouse smoothly (more human-like)
+                pyautogui.moveTo(x, y, duration=0.3)
+                time.sleep(0.1)
+                pyautogui.click()
+            except pyautogui.FailSafeException:
+                print("Click cancelled due to fail-safe trigger")
         else:
             print("No coordinates found for click target")
     
@@ -88,22 +171,25 @@ class IntelligentExecutor:
             pyautogui.typewrite(text_to_type, interval=0.05)
     
     def intelligent_app_open(self, command_data):
-        """Open apps intelligently using Windows search"""
+        """Open apps with fail-safe handling"""
         app_name = command_data.get('app_to_search', '')
         
         if app_name:
-            print(f"Opening {app_name} using Windows search...")
-            
-            # Press Windows key
-            pyautogui.press('win')
-            time.sleep(0.5)
-            
-            # Type app name
-            pyautogui.typewrite(app_name, interval=0.1)
-            time.sleep(1)
-            
-            # Press Enter to open first result
-            pyautogui.press('enter')
+            try:
+                print(f"Opening {app_name} using Windows search...")
+                
+                # Press Windows key
+                pyautogui.press('win')
+                time.sleep(0.5)
+                
+                # Type app name
+                pyautogui.typewrite(app_name, interval=0.1)
+                time.sleep(1)
+                
+                # Press Enter to open first result
+                pyautogui.press('enter')
+            except pyautogui.FailSafeException:
+                print("App opening cancelled due to fail-safe trigger")
     
     def analyze_and_recommend(self, command_data, screen_analysis):
         """Analyze screen content and make intelligent recommendations"""

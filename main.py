@@ -1,4 +1,3 @@
-# main.py (updated)
 import sys
 import os
 import threading
@@ -38,23 +37,31 @@ class SuperIntelligentDesktopAssistant:
         
         # Setup hotkeys
         if self.hotkey_manager.setup_hotkeys():
-            print("✓ Global hotkeys registered (Ctrl+Alt+Space)")
+            print("✓ Global hotkeys registered (Alt+q)")
         else:
             print("✗ Failed to register global hotkeys")
             
         print("✓ Super Intelligent Desktop AI Assistant ready!")
         print("✓ Screen analysis and computer vision enabled")
         print("✓ Intelligent command processing active")
-        print("Press Ctrl+Alt+Space to activate the super intelligent assistant")
+        print("Press Alt+q to activate the super intelligent assistant")
         
     def show_assistant(self):
-        """Show the chat interface with screen analysis"""
-        # Analyze screen before showing interface
-        screen_analysis = self.screen_intelligence.capture_and_analyze_screen()
-        self.chat_interface.set_current_screen_analysis(screen_analysis)
-        
-        # Show interface
+        """Show the chat interface immediately and perform screen analysis asynchronously"""
+        # Show interface immediately - FAST!
         self.root.after(0, self.chat_interface.show_interface)
+        
+        # Perform screen analysis in background thread
+        def analyze_screen():
+            try:
+                screen_analysis = self.screen_intelligence.capture_and_analyze_screen()
+                # Update the interface with analysis results when ready
+                self.root.after(0, lambda: self.chat_interface.set_current_screen_analysis(screen_analysis))
+            except Exception as e:
+                print(f"Screen analysis error: {e}")
+        
+        # Start analysis in background thread
+        threading.Thread(target=analyze_screen, daemon=True).start()
         
     def run(self):
         """Run the main application"""
@@ -63,6 +70,18 @@ class SuperIntelligentDesktopAssistant:
         except KeyboardInterrupt:
             print("\nShutting down Super Intelligent AI Assistant...")
             self.shutdown()
+    
+    def handle_exception(exc_type, exc_value, exc_traceback):
+        """Global exception handler"""
+        if issubclass(exc_type, KeyboardInterrupt):
+            sys.__excepthook__(exc_type, exc_value, exc_traceback)
+            return
+        
+        print(f"Uncaught exception: {exc_type.__name__}: {exc_value}")
+
+    # Set global exception handler
+    sys.excepthook = handle_exception
+
             
     def shutdown(self):
         """Clean shutdown"""
